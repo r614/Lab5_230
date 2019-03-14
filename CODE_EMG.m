@@ -80,15 +80,31 @@ xlabel('Time(s)')
 
 fftNF = fft(EMG1)
 figure(5)
-plot(ElapsedTime,fftNF)
+
+L = length(ElapsedTime)
+
+P2 = abs(fftNF/L);
+P1 = P2(1:L/2+1);
+P1(2:end-1) = 2*P1(2:end-1); %Single-sided amplitude spectrum
+
+f = Fs*(0:(L/2))/L; %Define the frequency domain for plotting
+
+
+plot(f,P1)
 title('EMG Data - Hard grip, FFT without filters')
 ylabel('EMG(mV)')
 xlabel('Time(s)')
+ylim([-0.3, 0.3])
 %% %% FFT - After filters
+
+f = Fs*(0:(L/2))/L;
+P2 = abs(fftF/L);
+P1 = P2(1:L/2+1);
+P1(2:end-1) = 2*P1(2:end-1); %Single-sided amplitude spectrum
 
 fftF = fft(z)
 figure(5)
-plot(ElapsedTime,fftF)
+plot(f,P1)
 title('EMG Data - Hard grip, FFT after filters')
 ylabel('EMG(mV)')
 xlabel('Time(s)')
