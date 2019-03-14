@@ -9,7 +9,7 @@ figure(1)
 plot(ElapsedTime,EMG1)
 title('EMG data')
 ylabel('EMG(mV)')
-xlabel('Time(ms)')
+xlabel('Time(s)')
 
 %% Pass Filters - Step 2
 
@@ -27,6 +27,9 @@ a = filtfilt(b,a,EMG1); % zero-phase filtering
 
 figure(2)
 plot(ElapsedTime,a)
+title('Low Pass Filter')
+ylabel('EMG(mV)')
+xlabel('Time(s)')
 %% Pass Filters - Step 3
 
 % [B,A] = butter(N,Wn,'low') designs a highpass filter where all
@@ -43,11 +46,17 @@ z = filtfilt(d,c,a); % zero-phase filtering
 
 figure(3)
 plot(ElapsedTime,z)
+title('High Pass Filter')
+ylabel('EMG(mV)')
+xlabel('Time(s)')
 %% Full Wave Rectify - Step 4
 
 absZ = abs(z) 
 figure(4) 
 plot(ElapsedTime,absZ) 
+title('Full Wave Rectify')
+ylabel('EMG(mV)')
+xlabel('Time(s)')
 %% Linear Envelope - Low pass, Butter - Step 5
 
 % [B,A] = butter(N,Wn,'low') designs a highpass filter where all
@@ -64,20 +73,23 @@ x = filtfilt(f,e,absZ); % zero-phase filtering
 
 figure(4)
 plot(ElapsedTime,x)
+title('Linear Envelope')
+ylabel('EMG(mV)')
+xlabel('Time(s)')
 %% FFT - No filters
 
 fftNF = fft(EMG1)
 figure(5)
 plot(ElapsedTime,fftNF)
-title('EMG FFT without filters')
+title('EMG Data - Hard grip, FFT without filters')
 ylabel('EMG(mV)')
-xlabel('Time(ms)')
+xlabel('Time(s)')
 %% %% FFT - After filters
 
 fftF = fft(z)
 figure(5)
 plot(ElapsedTime,fftF)
-title('EMG FFT after filters')
+title('EMG Data - Hard grip, FFT after filters')
 ylabel('EMG(mV)')
-xlabel('Time(ms)')
+xlabel('Time(s)')
 
